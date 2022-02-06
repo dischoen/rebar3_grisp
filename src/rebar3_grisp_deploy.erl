@@ -42,7 +42,7 @@ init(State) ->
                 "Deploys a GRiSP application.\n"
                 "\n"
                 "The command requires the release name and version to be "
-                "provided. Options passed after '--' is sent to the Rebar 3 "
+                "provided. Options passed after '--' are sent to the Rebar 3 "
                 "release task.\n"
             }
     ]),
@@ -60,6 +60,9 @@ do(RState) ->
     {Args, _} = rebar_state:command_parsed_args(RState),
     RelName = proplists:get_value(relname, Args),
     RelVsn = proplists:get_value(relvsn, Args),
+
+    io:format("RelName ~p RelVsn ~p~n", [RelName, RelVsn]),
+
     Force = proplists:get_value(force, Args, false),
 
     ProjectRoot = rebar_dir:root_dir(RState),
@@ -97,6 +100,8 @@ do(RState) ->
         info("Deployment done"),
         {ok, RState2}
     catch
+        error:{params_not_provided, Param} ->
+            abort("Required parameter(s) ~p not provided.~n", [Param]);
         error:{could_not_create_dir, Dir, Reason} ->
             abort("Could not create directory ~s:~n  ~p", [Dir, Reason]);
         error:{could_not_delete_file, File, Reason} ->
