@@ -63,7 +63,7 @@ do(RState) ->
 
     case {RelName, RelVsn} of
         {undefined,undefined} -> 
-            error({params_not_provided, ["-n", "-v"]})
+            error({params_not_provided, ["-n", "-v"]});
             %%abort("-n and -v are required!~n",[]);
         {undefined,_} -> 
             abort("-n is required~n",[]);
