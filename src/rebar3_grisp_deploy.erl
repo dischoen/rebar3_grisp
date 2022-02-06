@@ -70,7 +70,7 @@ do(RState) ->
         [_,undefined] -> 
             debug("RelArgs undef2~n",[]),
             abort("-n undefined~n",[]);
-        [_,_,_,_] -> debug("RelArgs ok", [])
+        [_,_] -> debug("RelArgs ok", [])
     end,
 
     Force = proplists:get_value(force, Args, false),
