@@ -232,7 +232,7 @@ release_handler(#{name := Name, version := Version, erts := Root}, RState) ->
         [_,_,_,undefined] -> 
             debug("RelArgs undef2~n",[]),
             abort("-n undefined~n",[]);
-        [_,_,_,_] -> debug("RelArgs ok")
+        [_,_,_,_] -> debug("RelArgs ok", [])
     end,
     debug("IWANTOTSEESOMETHING~n", []),
     debug("ROOT: ~p", [Root]),
