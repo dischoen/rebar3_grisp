@@ -62,15 +62,14 @@ do(RState) ->
     RelName = proplists:get_value(relname, Args),
     RelVsn = proplists:get_value(relvsn, Args),
 
-    io:format("RelName ~p RelVsn ~p~n", [RelName, RelVsn]),
     case {RelName, RelVsn} of
+        {undefined,undefined} -> 
+            abort("-n and -v are required!~n",[]);
         {undefined,_} -> 
-            debug("RelArgs undef1~n",[]),
-            abort("-n undefined~n",[]);
+            abort("-n is required~n",[]);
         {_,undefined} -> 
-            debug("RelArgs undef2~n",[]),
-            abort("-n undefined~n",[]);
-        {_,_} -> debug("RelArgs ok", [])
+            abort("-v isrequired~n",[]);
+        {_,_} -> ok
     end,
 
     Force = proplists:get_value(force, Args, false),
