@@ -226,9 +226,13 @@ release_handler(#{name := Name, version := Version, erts := Root}, RState) ->
     RelArgs = rel_args(Name, Version, OriginalArgs),
     debug("ARGS: ~p", [RelArgs]),
     case RelArgs of
-        [_,undefined,_,_] -> abort("-n undefined");
-        [_,_,_,undefined] -> abort("-n undefined");
-        [_,_,_,_] -> ok
+        [_,undefined,_,_] -> 
+            debug("RelArgs undef1"),
+            abort("-n undefined");
+        [_,_,_,undefined] -> 
+            debug("RelArgs undef2"),
+            abort("-n undefined");
+        [_,_,_,_] -> debug("RelArgs ok")
     end,
     debug("ROOT: ~p", [Root]),
     RState2 = rebar_state:command_args(RState, RelArgs),
