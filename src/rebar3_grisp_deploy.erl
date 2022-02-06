@@ -63,11 +63,11 @@ do(RState) ->
     RelVsn = proplists:get_value(relvsn, Args),
 
     io:format("RelName ~p RelVsn ~p~n", [RelName, RelVsn]),
-    case RelArgs of
-        [_,undefined,_,_] -> 
+    case {RelName, RelVsn} of
+        [undefined,_] -> 
             debug("RelArgs undef1~n",[]),
             abort("-n undefined~n",[]);
-        [_,_,_,undefined] -> 
+        [_,undefined] -> 
             debug("RelArgs undef2~n",[]),
             abort("-n undefined~n",[]);
         [_,_,_,_] -> debug("RelArgs ok", [])
