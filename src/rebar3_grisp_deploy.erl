@@ -69,11 +69,10 @@ do(RState) ->
         case {RelName, RelVsn} of
             {undefined,undefined} -> 
                 error({params_not_provided, ["-n", "-v"]});
-            %%abort("-n and -v are required!~n",[]);
             {undefined,_} -> 
-                abort("-n is required~n",[]);
+                error({params_not_provided, ["-n"]});
             {_,undefined} -> 
-                abort("-v isrequired~n",[]);
+                error({params_not_provided, ["-v"]});
             {_,_} -> ok
         end,
         State = grisp_tools:deploy(#{
