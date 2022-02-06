@@ -63,6 +63,15 @@ do(RState) ->
     RelVsn = proplists:get_value(relvsn, Args),
 
     io:format("RelName ~p RelVsn ~p~n", [RelName, RelVsn]),
+    case RelArgs of
+        [_,undefined,_,_] -> 
+            debug("RelArgs undef1~n",[]),
+            abort("-n undefined~n",[]);
+        [_,_,_,undefined] -> 
+            debug("RelArgs undef2~n",[]),
+            abort("-n undefined~n",[]);
+        [_,_,_,_] -> debug("RelArgs ok", [])
+    end,
 
     Force = proplists:get_value(force, Args, false),
 
@@ -225,16 +234,6 @@ release_handler(#{name := Name, version := Version, erts := Root}, RState) ->
     OriginalArgs = rebar_state:command_args(RState),
     RelArgs = rel_args(Name, Version, OriginalArgs),
     debug("ARGS: ~p", [RelArgs]),
-    case RelArgs of
-        [_,undefined,_,_] -> 
-            debug("RelArgs undef1~n",[]),
-            abort("-n undefined~n",[]);
-        [_,_,_,undefined] -> 
-            debug("RelArgs undef2~n",[]),
-            abort("-n undefined~n",[]);
-        [_,_,_,_] -> debug("RelArgs ok", [])
-    end,
-    debug("IWANTOTSEESOMETHING~n", []),
     debug("ROOT: ~p", [Root]),
     RState2 = rebar_state:command_args(RState, RelArgs),
     RState3 = rebar_state:set(RState2, relx, [
