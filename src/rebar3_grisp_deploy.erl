@@ -60,24 +60,22 @@ do(RState) ->
     {Args, _} = rebar_state:command_parsed_args(RState),
     RelName = proplists:get_value(relname, Args),
     RelVsn = proplists:get_value(relvsn, Args),
-
-    case {RelName, RelVsn} of
-        {undefined,undefined} -> 
-            error({params_not_provided, ["-n", "-v"]});
-            %%abort("-n and -v are required!~n",[]);
-        {undefined,_} -> 
-            abort("-n is required~n",[]);
-        {_,undefined} -> 
-            abort("-v isrequired~n",[]);
-        {_,_} -> ok
-    end,
-
     Force = proplists:get_value(force, Args, false),
 
     ProjectRoot = rebar_dir:root_dir(RState),
     Apps = rebar3_grisp_util:apps(RState),
 
     try
+        case {RelName, RelVsn} of
+            {undefined,undefined} -> 
+                error({params_not_provided, ["-n", "-v"]});
+            %%abort("-n and -v are required!~n",[]);
+            {undefined,_} -> 
+                abort("-n is required~n",[]);
+            {_,undefined} -> 
+                abort("-v isrequired~n",[]);
+            {_,_} -> ok
+        end,
         State = grisp_tools:deploy(#{
             project_root => ProjectRoot,
             apps => Apps,
